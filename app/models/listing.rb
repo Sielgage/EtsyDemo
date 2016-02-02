@@ -1,12 +1,11 @@
 class Listing < ActiveRecord::Base
-	if Rails.env.development
+	if Rails.env.development?
 	has_attached_file :image, styles: { medium: "200x>", thumb: "100x100>" }, default_url: "No-image-found.jpg"
-	validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 	else
-	has_attached_file 				 :image, styles: { medium: "200x>", thumb: "100x100>" }, default_url: "No-image-found.jpg"
+	has_attached_file :image, styles: { medium: "200x>", thumb: "100x100>" }, default_url: "No-image-found.jpg"
 	validates_attachment_content_type :image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 									 ,:storage => :dropbox,
                   					 :dropbox_credentials => Rails.root.join("config/dropbox.yml"),
-                  					 :path => ":style/id:filename"
+                  					 :path => ":style/id_:filename"
     end
 end
